@@ -147,12 +147,37 @@
                     rounded
                   "
       >
+        <option value="Turkey">Turkey</option>
         <option value="USA">USA</option>
         <option value="Mexico">Mexico</option>
         <option value="Germany">Germany</option>
         <option value="Antarctica">Antarctica</option>
       </vee-field>
       <ErrorMessage class="text-red-600" name="country" />
+    </div>
+    <div class="mb-3">
+      <label class="inline-block mb-2">You are artist or Listener?</label>
+      <vee-field
+        as="select"
+        name="isArtist"
+        class="
+                    block
+                    w-full
+                    py-1.5
+                    px-3
+                    text-gray-800
+                    border border-gray-300
+                    transition
+                    duration-500
+                    focus:outline-none
+                    focus:border-black
+                    rounded
+                  "
+      >
+        <option value="Listener">Listener</option>
+        <option value="Artist">Artist</option>
+      </vee-field>
+      <ErrorMessage class="text-red-600" name="isArtist" />
     </div>
     <!-- TOS -->
     <div class="mb-3 pl-6">
@@ -197,10 +222,12 @@ export default {
         password: 'required|min:4|max:100',
         confirm_password: 'password_missmatch:@password',
         country: 'required|country_excluded:Antarctica',
+        isArtist: 'required',
         tos: 'tos',
       },
       userData: {
-        country: 'USA',
+        country: 'Turkey',
+        isArtist: 'Listener',
       },
       reg_in_submission: false,
       reg_show_alert: false,
@@ -208,15 +235,25 @@ export default {
     };
   },
   methods: {
-    register(values) {
+    async register(values) {
       this.reg_show_alert = true;
       this.reg_in_submission = true;
       this.reg_alert_variant = 'bg-blue-500';
       this.reg_alert_msg = 'Please wait! Your account is being created!';
 
+      try {
+        await this.$store.dispatch('register', values);
+      } catch (error) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = 'bg-red-500';
+        this.reg_alert_msg = 'An unexpected error occured. Please try again later.\n';
+        this.reg_alert_msg += error.message;
+        return;
+      }
+
       this.reg_alert_variant = 'bg-green-500';
       this.reg_alert_msg = 'Success! Your account has been created';
-      console.log(values);
+      window.location.reload();
     },
   },
 };
