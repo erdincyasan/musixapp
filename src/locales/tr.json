@@ -1,0 +1,15 @@
+{
+  "home": {
+    "listen": "Harika Müzikler Dinleyin!"
+  },
+  "manage": {
+    "my_songs": "Şarkılarım"
+  },
+  "register": {
+    "TOS": "Kullanım koşulları",
+    "accept": "Kullanım koşullarını kabul ediyorum {0}"
+  },
+  "song": {
+    "comment_count": "Yorum yok | 1 Yorum | {count} Yorum"
+  }
+}

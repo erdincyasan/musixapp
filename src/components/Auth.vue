@@ -84,8 +84,8 @@
               >
             </li>
           </ul>
-          <app-login-form v-if="tab==='login'" />
-          <app-register-form v-if="tab==='register'" />
+          <app-login-form v-if="tab === 'login'" />
+          <app-register-form v-if="tab === 'register'" />
         </div>
       </div>
     </div>
@@ -111,7 +111,9 @@ export default {
     // ...mapState({
     //   modal: 'authModalShow',
     // }),
-    ...mapState(['authModalShow']),
+    ...mapState({
+      authModalShow: (state) => state.auth.authModalShow,
+    }),
   },
   methods: {
     ...mapMutations(['toggleAuthModal']),
